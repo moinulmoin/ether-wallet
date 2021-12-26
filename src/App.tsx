@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+	Alert,
+	AlertIcon,
+	ChakraProvider,
+	Heading,
+	Link,
+	Text,
+	useDisclosure,
+} from '@chakra-ui/react';
+import AccountModal from './components/AccountModal';
+import ConnectButton from './components/ConnectButton';
+import Layout from './components/Layout';
+import theme from './theme';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	return (
+		<ChakraProvider theme={theme}>
+			<Alert
+				variant='left-accent'
+				status='info'
+				sx={{
+					width: 'max-content',
+					position: 'absolute',
+					right: 0,
+					top: 0,
+					marginTop: '2rem',
+				}}
+			>
+				<AlertIcon />
+				Use Rinkby Network to view wallet on etherscan!
+			</Alert>
+			<Layout>
+				<Heading as='h1' size='xl' color='white' textAlign='center'>
+					Ether Wallet
+				</Heading>
+				<ConnectButton handleOpenModal={onOpen} />
+				<AccountModal isOpen={isOpen} onClose={onClose} />
+				<Text color='white'>
+					Thank for visiting. Made with 💖 by{' '}
+					<Link
+						href='https://moinulmoin.com'
+						color='blue.500'
+						_hover={{ border: 'none' }}
+						_focus={{ border: 'none' }}
+						isExternal
+					>
+						Moinul Moin
+					</Link>
+				</Text>
+			</Layout>
+		</ChakraProvider>
+	);
 }
 
 export default App;
